@@ -7,8 +7,8 @@ public class View {
     private JFrame frame = new JFrame();
     private JLabel enterTempLabel = new JLabel("Enter temperature:");
     private JLabel convertedLabel = new JLabel("Converted:");
-    private JLabel[] resultLabels = {new JLabel("Result0:"), new JLabel("Result1:")};
-    private JLabel[] valueLabels = {new JLabel("0.0"), new JLabel("1.0")};
+    private JLabel[] resultLabels = {new JLabel(""), new JLabel("")};
+    private JLabel[] valueLabels = {new JLabel(""), new JLabel("")};
     private JTextField tempField = new JTextField("0.0");
     private JComboBox<TemperatureType> gradeComboBox = new JComboBox<>(TemperatureType.values());
     private JButton convertButton = new JButton("Convert");
@@ -30,7 +30,6 @@ public class View {
             // Set layout and add elements to it
             GroupLayout layout = new GroupLayout(frame.getContentPane());
             frame.getContentPane().setLayout(layout);
-
             layout.setAutoCreateGaps(true);
             layout.setAutoCreateContainerGaps(true);
 
@@ -76,27 +75,27 @@ public class View {
         });
     }
 
-    public TemperatureType getSelectedTempType() {
+    TemperatureType getSelectedTempType() {
         return (TemperatureType) gradeComboBox.getSelectedItem();
     }
 
-    public String getTempValue() {
+    String getTempValue() {
         return tempField.getText();
     }
 
-    public JButton getConvertButton() {
+    JButton getConvertButton() {
         return convertButton;
     }
 
-    public void showErrorMessage(String text) {
+    void showErrorMessage(String text) {
         JOptionPane.showMessageDialog(frame, text, "Warning", JOptionPane.WARNING_MESSAGE);
     }
 
-    public JLabel[] getResultLabels() {
+    JLabel[] getResultLabels() {
         return resultLabels;
     }
 
-    public JLabel[] getValueLabels() {
+    JLabel[] getValueLabels() {
         return valueLabels;
     }
 }

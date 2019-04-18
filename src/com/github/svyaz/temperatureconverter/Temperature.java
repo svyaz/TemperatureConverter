@@ -11,10 +11,10 @@ public class Temperature {
     private double temperature;
 
     public Temperature() {
-        this.temperature = 273.15 + 36.6;
+        this.temperature = -273.15;
     }
 
-    public void setTemperature(double temperature, TemperatureType type) {
+    void setTemperature(double temperature, TemperatureType type) {
         switch (type) {
             case KELVIN:
                 if (temperature < 0) {
@@ -52,21 +52,7 @@ public class Temperature {
         }
     }
 
-    public String getTemperatureString(TemperatureType type) {
+    String getTemperatureString(TemperatureType type) {
         return String.format("%.2f", getTemperature(type));
     }
-
-    /*public double getTemperatureInKelvins() {
-        return temperature;
-    }
-
-    public double getTemperatureInCelsius() {
-        return temperature - 273.15;
-    }
-
-    public double getTemperatureInFahrenheit() {
-        return 1.8 * (temperature - 273.15) + 32;
-    }
-
-    */
 }
