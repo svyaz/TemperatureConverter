@@ -14,7 +14,49 @@ public class Temperature {
         this.temperature = 273.15 + 36.6;
     }
 
-    public double getTemperatureInKelvins() {
+    public void setTemperature(double temperature, TemperatureType type) {
+        switch (type) {
+            case KELVIN:
+                if (temperature < 0) {
+                    throw new IllegalArgumentException(EXC_MSG_ILLEGAL_KELVIN_VALUE);
+                }
+                this.temperature = temperature;
+                break;
+
+            case CELSIUS:
+                if (temperature < -273.15) {
+                    throw new IllegalArgumentException(EXC_MSG_ILLEGAL_CELSIUS_VALUE);
+                }
+                this.temperature = temperature + 273.15;
+                break;
+
+            case FAHRENHEIT:
+                if (temperature < -459.67) {
+                    throw new IllegalArgumentException(EXC_MSG_ILLEGAL_FAHRENHEIT_VALUE);
+                }
+                this.temperature = (temperature + 459.67) * 5.0 / 9.0;
+                break;
+        }
+    }
+
+    private double getTemperature(TemperatureType type) {
+        switch (type) {
+            case KELVIN:
+                return temperature;
+            case CELSIUS:
+                return temperature - 273.15;
+            case FAHRENHEIT:
+                return (temperature - 273.15) * 1.8 + 32;
+            default:
+                return 0.0;
+        }
+    }
+
+    public String getTemperatureString(TemperatureType type) {
+        return String.format("%.2f", getTemperature(type));
+    }
+
+    /*public double getTemperatureInKelvins() {
         return temperature;
     }
 
@@ -26,24 +68,5 @@ public class Temperature {
         return 1.8 * (temperature - 273.15) + 32;
     }
 
-    public void setTemperatureInKelvins(double kelvinsTemp) {
-        if (kelvinsTemp < 0) {
-            throw new IllegalArgumentException(EXC_MSG_ILLEGAL_KELVIN_VALUE);
-        }
-        this.temperature = kelvinsTemp;
-    }
-
-    public void setTemperatureInCelsius(double celsiusTemp) {
-        if (celsiusTemp < -273.15) {
-            throw new IllegalArgumentException(EXC_MSG_ILLEGAL_CELSIUS_VALUE);
-        }
-        this.temperature = celsiusTemp + 273.15;
-    }
-
-    public void setTemperatureInFahrenheit(double fahrenheitTemp) {
-        if (fahrenheitTemp < -459.67) {
-            throw new IllegalArgumentException(EXC_MSG_ILLEGAL_FAHRENHEIT_VALUE);
-        }
-        this.temperature = fahrenheitTemp + 273.15;
-    }
+    */
 }

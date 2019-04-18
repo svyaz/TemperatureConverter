@@ -4,32 +4,28 @@ import javax.swing.*;
 import java.awt.*;
 
 public class View {
-    private JFrame frame;
+    private JFrame frame = new JFrame();
+    private JLabel enterTempLabel = new JLabel("Enter temperature:");
+    private JLabel convertedLabel = new JLabel("Converted:");
+    private JLabel[] resultLabels = {new JLabel("Result0:"), new JLabel("Result1:")};
+    private JLabel[] valueLabels = {new JLabel("0.0"), new JLabel("1.0")};
+    private JTextField tempField = new JTextField("0.0");
+    private JComboBox<TemperatureType> gradeComboBox = new JComboBox<>(TemperatureType.values());
+    private JButton convertButton = new JButton("Convert");
 
     public View() {
         SwingUtilities.invokeLater(() -> {
-            // Create frame
+            // Set frame
             int frameWidth = 400;
             int frameHeight = 160;
-            frame = new JFrame("Temperature Converter");
             frame.setSize(frameWidth, frameHeight);
+            frame.setTitle("Temperature Converter");
             frame.setResizable(false);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             frame.setLocation(screenSize.width / 2 - frameWidth / 2,
                     screenSize.height / 2 - frameHeight / 2);
             frame.setVisible(true);
-
-            // Create elements
-            JLabel enterTempLabel = new JLabel("Enter temperature:");
-            JLabel convertedLabel = new JLabel("Converted:");
-            JLabel resultLabel0 = new JLabel("Result0:");
-            JLabel resultLabel1 = new JLabel("Result1:");
-            JLabel valueLabel0 = new JLabel("0.0");
-            JLabel valueLabel1 = new JLabel("0.0");
-            JTextField tempField = new JTextField("0.0");
-            JComboBox<String> gradeComboBox = new JComboBox<>();
-            JButton convertButton = new JButton("Convert");
 
             // Set layout and add elements to it
             GroupLayout layout = new GroupLayout(frame.getContentPane());
@@ -49,12 +45,12 @@ public class View {
                                     )
                                     .addComponent(convertedLabel)
                                     .addGroup(layout.createSequentialGroup()
-                                            .addComponent(resultLabel0)
-                                            .addComponent(valueLabel0)
+                                            .addComponent(resultLabels[0])
+                                            .addComponent(valueLabels[0])
                                     )
                                     .addGroup(layout.createSequentialGroup()
-                                            .addComponent(resultLabel1)
-                                            .addComponent(valueLabel1)
+                                            .addComponent(resultLabels[1])
+                                            .addComponent(valueLabels[1])
                                     )
                             )
             );
@@ -69,14 +65,38 @@ public class View {
                             )
                             .addComponent(convertedLabel)
                             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                    .addComponent(resultLabel0)
-                                    .addComponent(valueLabel0)
+                                    .addComponent(resultLabels[0])
+                                    .addComponent(valueLabels[0])
                             )
                             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                    .addComponent(resultLabel1)
-                                    .addComponent(valueLabel1)
+                                    .addComponent(resultLabels[1])
+                                    .addComponent(valueLabels[1])
                             )
             );
         });
+    }
+
+    public TemperatureType getSelectedTempType() {
+        return (TemperatureType) gradeComboBox.getSelectedItem();
+    }
+
+    public String getTempValue() {
+        return tempField.getText();
+    }
+
+    public JButton getConvertButton() {
+        return convertButton;
+    }
+
+    public void showErrorMessage(String text) {
+        JOptionPane.showMessageDialog(frame, text, "Warning", JOptionPane.WARNING_MESSAGE);
+    }
+
+    public JLabel[] getResultLabels() {
+        return resultLabels;
+    }
+
+    public JLabel[] getValueLabels() {
+        return valueLabels;
     }
 }
