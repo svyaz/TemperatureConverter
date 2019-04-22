@@ -1,5 +1,7 @@
 package com.github.svyaz.temperatureconverter;
 
+import com.github.svyaz.temperatureconverter.data.TemperatureScale;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,7 +12,7 @@ public class View {
     private JLabel[] resultLabels = {new JLabel(""), new JLabel("")};
     private JLabel[] valueLabels = {new JLabel(""), new JLabel("")};
     private JTextField tempField = new JTextField("0.0");
-    private JComboBox<TemperatureType> gradeComboBox = new JComboBox<>(TemperatureType.values());
+    private JComboBox<TemperatureScale> scaleComboBox = new JComboBox<>();
     private JButton convertButton = new JButton("Convert");
 
     public View() {
@@ -39,7 +41,7 @@ public class View {
                                     .addComponent(enterTempLabel)
                                     .addGroup(layout.createSequentialGroup()
                                             .addComponent(tempField)
-                                            .addComponent(gradeComboBox)
+                                            .addComponent(scaleComboBox)
                                             .addComponent(convertButton)
                                     )
                                     .addComponent(convertedLabel)
@@ -59,7 +61,7 @@ public class View {
                             .addComponent(enterTempLabel)
                             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                     .addComponent(tempField)
-                                    .addComponent(gradeComboBox)
+                                    .addComponent(scaleComboBox)
                                     .addComponent(convertButton)
                             )
                             .addComponent(convertedLabel)
@@ -75,8 +77,8 @@ public class View {
         });
     }
 
-    TemperatureType getSelectedTempType() {
-        return (TemperatureType) gradeComboBox.getSelectedItem();
+    TemperatureScale getSelectedTempScale() {
+        return (TemperatureScale) scaleComboBox.getSelectedItem();
     }
 
     String getTempValue() {
@@ -97,5 +99,9 @@ public class View {
 
     JLabel[] getValueLabels() {
         return valueLabels;
+    }
+
+    JComboBox<TemperatureScale> getScaleComboBox() {
+        return scaleComboBox;
     }
 }
