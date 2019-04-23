@@ -11,7 +11,7 @@ public class View {
     private JLabel convertedLabel = new JLabel("Converted:");
     private JLabel[] resultLabels = {new JLabel(""), new JLabel("")};
     private JLabel[] valueLabels = {new JLabel(""), new JLabel("")};
-    private JTextField tempField = new JTextField("0.0");
+    private JTextField tempField = new JTextField(null, "0.0", 1);
     private JComboBox<TemperatureScale> scaleComboBox = new JComboBox<>();
     private JButton convertButton = new JButton("Convert");
 
