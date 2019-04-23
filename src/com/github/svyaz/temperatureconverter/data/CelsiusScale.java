@@ -5,16 +5,16 @@ public class CelsiusScale implements TemperatureScale {
     private static final String SCALE_NAME = "Celsius degrees";
 
     @Override
-    public double convertToAbsTemp(double temp) {
+    public double convertToBaseTemp(double temp) {
         if (temp < -273.15) {
             throw new IllegalArgumentException(MSG_EXC_ILLEGAL_VALUE);
         }
-        return temp + 273.15;
+        return temp;
     }
 
     @Override
-    public double convertFromAbsTemp(double temp) {
-        return temp - 273.15;
+    public double convertFromBaseTemp(double temp) {
+        return temp;
     }
 
     @Override

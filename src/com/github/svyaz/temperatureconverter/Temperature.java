@@ -4,16 +4,16 @@ import com.github.svyaz.temperatureconverter.data.TemperatureScale;
 
 public class Temperature {
     /**
-     * Absolute temperature value (Kelvins in fact)
+     * Base temperature value (Celsius)
      */
     private double temperature;
 
     void setTemperature(double temperature, TemperatureScale scale) {
-        this.temperature = scale.convertToAbsTemp(temperature);
+        this.temperature = scale.convertToBaseTemp(temperature);
     }
 
     private double getTemperature(TemperatureScale scale) {
-        return scale.convertFromAbsTemp(temperature);
+        return scale.convertFromBaseTemp(temperature);
     }
 
     String getTemperatureString(TemperatureScale scale) {

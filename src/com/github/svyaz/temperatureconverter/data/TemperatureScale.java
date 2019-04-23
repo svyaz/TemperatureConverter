@@ -2,18 +2,18 @@ package com.github.svyaz.temperatureconverter.data;
 
 public interface TemperatureScale {
     /**
-     * Converts to absolute temperature (in Kelvins).
+     * Converts to base temperature (Celsius).
      *
-     * @param temp specified temperature.
-     * @return absolute temperature.
+     * @param temp specifies temperature.
+     * @return base temperature.
      */
-    double convertToAbsTemp(double temp);
+    double convertToBaseTemp(double temp);
 
     /**
-     * Converts specified value from absolute to this scale temperature.
+     * Converts specified value from base temperature to this scale.
      *
-     * @param temp specified absolute temperature.
-     * @return converted value from absolute temperature.
+     * @param temp specifies base temperature.
+     * @return converted value from base temperature.
      */
-    double convertFromAbsTemp(double temp);
+    double convertFromBaseTemp(double temp);
 }

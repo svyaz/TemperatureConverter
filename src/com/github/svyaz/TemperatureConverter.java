@@ -9,9 +9,9 @@ public class TemperatureConverter {
         new Controller(new View(),
                 new Temperature(),
                 new TemperatureScale[]{
-                        new KelvinScale(),
                         new CelsiusScale(),
-                        new FahrenheitScale()
+                        new FahrenheitScale(),
+                        new KelvinScale(),
                 });
     }
 }
