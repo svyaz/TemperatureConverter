@@ -9,6 +9,9 @@ public class CelsiusScale implements TemperatureScale {
         if (temp < -273.15) {
             throw new IllegalArgumentException(MSG_EXC_ILLEGAL_VALUE);
         }
+        if (temp > MAX_TEMPERATURE) {
+            throw new IllegalArgumentException(MSG_EXC_MAX_TEMPERATURE_EXCEEDED);
+        }
         return temp;
     }
 
