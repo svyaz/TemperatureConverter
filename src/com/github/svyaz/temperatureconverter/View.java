@@ -13,6 +13,7 @@ public class View {
     private JTextField tempField = new JTextField(null, "0.0", 1);
     private JComboBox<TemperatureScale> scaleComboBox = new JComboBox<>();
     private JButton convertButton = new JButton("Convert");
+    private JButton copyButton = new JButton("Copy");
 
     public View() {
         SwingUtilities.invokeLater(() -> {
@@ -24,7 +25,7 @@ public class View {
 
             // Set frame
             int frameWidth = 440;
-            int frameHeight = 180;
+            int frameHeight = 210;
             frame.setSize(frameWidth, frameHeight);
             frame.setTitle("Temperature Converter");
             frame.setResizable(false);
@@ -54,6 +55,7 @@ public class View {
                                     )
                                     .addComponent(convertedLabel)
                                     .addComponent(resultTextArea)
+                                    .addComponent(copyButton)
                             )
             );
 
@@ -67,6 +69,7 @@ public class View {
                             )
                             .addComponent(convertedLabel)
                             .addComponent(resultTextArea)
+                            .addComponent(copyButton)
             );
         });
     }
@@ -81,6 +84,10 @@ public class View {
 
     JButton getConvertButton() {
         return convertButton;
+    }
+
+    JButton getCopyButton() {
+        return copyButton;
     }
 
     void showErrorMessage(String text) {

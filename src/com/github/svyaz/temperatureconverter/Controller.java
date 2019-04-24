@@ -3,6 +3,9 @@ package com.github.svyaz.temperatureconverter;
 import com.github.svyaz.temperatureconverter.data.TemperatureScale;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 
 public class Controller {
@@ -20,15 +23,25 @@ public class Controller {
             view.getScaleComboBox().addItem(scale);
         }
 
-        registerButtonObserver();
+        registerConvertButtonObserver();
+        registerCopyButtonObserver();
         updateView();
     }
 
-    private void registerButtonObserver() {
+    private void registerConvertButtonObserver() {
         view.getConvertButton().addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 updateView();
+            }
+        });
+    }
+
+    private void registerCopyButtonObserver() {
+        view.getCopyButton().addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                copyToClipboard();
             }
         });
     }
@@ -55,5 +68,11 @@ public class Controller {
         } catch (IllegalArgumentException exception) {
             view.showErrorMessage(exception.getMessage());
         }
+    }
+
+    private void copyToClipboard() {
+        StringSelection stringSelection = new StringSelection(view.getResultTextArea().getText());
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(stringSelection, null);
     }
 }
