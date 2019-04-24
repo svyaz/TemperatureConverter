@@ -9,17 +9,22 @@ public class View {
     private JFrame frame = new JFrame();
     private JLabel enterTempLabel = new JLabel("Enter temperature:");
     private JLabel convertedLabel = new JLabel("Converted:");
-    private JLabel[] resultLabels = {new JLabel(""), new JLabel("")};
-    private JLabel[] valueLabels = {new JLabel(""), new JLabel("")};
+    private JTextArea resultTextArea = new JTextArea();
     private JTextField tempField = new JTextField(null, "0.0", 1);
     private JComboBox<TemperatureScale> scaleComboBox = new JComboBox<>();
     private JButton convertButton = new JButton("Convert");
 
     public View() {
         SwingUtilities.invokeLater(() -> {
+            // Set system look and feel
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (Exception ignore) {
+            }
+
             // Set frame
-            int frameWidth = 400;
-            int frameHeight = 160;
+            int frameWidth = 440;
+            int frameHeight = 180;
             frame.setSize(frameWidth, frameHeight);
             frame.setTitle("Temperature Converter");
             frame.setResizable(false);
@@ -28,6 +33,9 @@ public class View {
             frame.setLocation(screenSize.width / 2 - frameWidth / 2,
                     screenSize.height / 2 - frameHeight / 2);
             frame.setVisible(true);
+
+            // Set elements
+            resultTextArea.setEditable(false);
 
             // Set layout and add elements to it
             GroupLayout layout = new GroupLayout(frame.getContentPane());
@@ -45,14 +53,7 @@ public class View {
                                             .addComponent(convertButton)
                                     )
                                     .addComponent(convertedLabel)
-                                    .addGroup(layout.createSequentialGroup()
-                                            .addComponent(resultLabels[0])
-                                            .addComponent(valueLabels[0])
-                                    )
-                                    .addGroup(layout.createSequentialGroup()
-                                            .addComponent(resultLabels[1])
-                                            .addComponent(valueLabels[1])
-                                    )
+                                    .addComponent(resultTextArea)
                             )
             );
 
@@ -65,14 +66,7 @@ public class View {
                                     .addComponent(convertButton)
                             )
                             .addComponent(convertedLabel)
-                            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                    .addComponent(resultLabels[0])
-                                    .addComponent(valueLabels[0])
-                            )
-                            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                    .addComponent(resultLabels[1])
-                                    .addComponent(valueLabels[1])
-                            )
+                            .addComponent(resultTextArea)
             );
         });
     }
@@ -93,12 +87,8 @@ public class View {
         JOptionPane.showMessageDialog(frame, text, "Warning", JOptionPane.WARNING_MESSAGE);
     }
 
-    JLabel[] getResultLabels() {
-        return resultLabels;
-    }
-
-    JLabel[] getValueLabels() {
-        return valueLabels;
+    JTextArea getResultTextArea() {
+        return resultTextArea;
     }
 
     JComboBox<TemperatureScale> getScaleComboBox() {

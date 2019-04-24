@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class Controller {
+    private static final String MSG_EXC_NOT_A_NUMBER = "Entered text is not a number.";
     private Temperature temp;
     private View view;
     private TemperatureScale[] scales;
@@ -38,17 +39,19 @@ public class Controller {
             TemperatureScale tempScale = view.getSelectedTempScale();
             temp.setTemperature(tempValue, tempScale);
 
-            int i = 0;
+            StringBuilder outText = new StringBuilder();
             for (TemperatureScale scale : scales) {
                 if (scale == tempScale) {
                     continue;
                 }
-                view.getResultLabels()[i].setText(scale.toString());
-                view.getValueLabels()[i].setText(temp.getTemperatureString(scale));
-                i++;
+                outText.append(scale.toString())
+                        .append(": ")
+                        .append(temp.getTemperatureString(scale))
+                        .append(System.lineSeparator());
             }
+            view.getResultTextArea().setText(outText.toString());
         } catch (NumberFormatException exception) {
-            view.showErrorMessage("Entered text is not a number.");
+            view.showErrorMessage(MSG_EXC_NOT_A_NUMBER);
         } catch (IllegalArgumentException exception) {
             view.showErrorMessage(exception.getMessage());
         }
