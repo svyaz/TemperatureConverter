@@ -4,6 +4,9 @@ import com.github.svyaz.temperatureconverter.data.TemperatureScale;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.ActionEvent;
 
 public class View {
     private JFrame frame = new JFrame();
@@ -72,10 +75,26 @@ public class View {
                             .addComponent(copyButton)
             );
         });
+        registerCopyButtonObserver();
     }
 
     TemperatureScale getSelectedTempScale() {
         return (TemperatureScale) scaleComboBox.getSelectedItem();
+    }
+
+    private void registerCopyButtonObserver() {
+        copyButton.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                copyToClipboard();
+            }
+        });
+    }
+
+    private void copyToClipboard() {
+        StringSelection stringSelection = new StringSelection(resultTextArea.getText());
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(stringSelection, null);
     }
 
     String getTempValue() {
@@ -84,10 +103,6 @@ public class View {
 
     JButton getConvertButton() {
         return convertButton;
-    }
-
-    JButton getCopyButton() {
-        return copyButton;
     }
 
     void showErrorMessage(String text) {
