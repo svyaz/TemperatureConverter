@@ -12,11 +12,7 @@ public class Temperature {
         this.temperature = scale.convertToBaseTemp(temperature);
     }
 
-    private double getTemperature(TemperatureScale scale) {
-        return scale.convertFromBaseTemp(temperature);
-    }
-
-    String getTemperatureString(TemperatureScale scale) {
-        return String.format("%.2f", getTemperature(scale));
+    double getTemperature() {
+        return temperature;
     }
 }

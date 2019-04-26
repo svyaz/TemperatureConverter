@@ -16,10 +16,7 @@ public class Controller {
         this.temp = temp;
         this.scales = scales;
 
-        for (TemperatureScale scale : scales) {
-            view.getScaleComboBox().addItem(scale);
-        }
-
+        view.setScales(scales);
         registerConvertButtonObserver();
         updateView();
     }
@@ -35,21 +32,10 @@ public class Controller {
 
     private void updateView() {
         try {
-            double tempValue = Double.parseDouble(view.getTempValue());
+            double tempValue = view.getTempValue();
             TemperatureScale tempScale = view.getSelectedTempScale();
             temp.setTemperature(tempValue, tempScale);
-
-            StringBuilder outText = new StringBuilder();
-            for (TemperatureScale scale : scales) {
-                if (scale == tempScale) {
-                    continue;
-                }
-                outText.append(scale.toString())
-                        .append(": ")
-                        .append(temp.getTemperatureString(scale))
-                        .append(System.lineSeparator());
-            }
-            view.getResultTextArea().setText(outText.toString());
+            view.setResult(temp.getTemperature(), tempScale, scales);
         } catch (NumberFormatException exception) {
             view.showErrorMessage(MSG_EXC_NOT_A_NUMBER);
         } catch (IllegalArgumentException exception) {
