@@ -1,5 +1,6 @@
 package com.github.svyaz.temperatureconverter;
 
+import com.github.svyaz.temperatureconverter.data.Temperature;
 import com.github.svyaz.temperatureconverter.data.TemperatureScale;
 
 import javax.swing.*;

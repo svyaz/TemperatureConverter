@@ -1,4 +1,4 @@
-package com.github.svyaz.temperatureconverter;
+package com.github.svyaz.temperatureconverter.data;
 
 import com.github.svyaz.temperatureconverter.data.TemperatureScale;
 
@@ -8,11 +8,11 @@ public class Temperature {
      */
     private double temperature;
 
-    void setTemperature(double temperature, TemperatureScale scale) {
+    public void setTemperature(double temperature, TemperatureScale scale) {
         this.temperature = scale.convertToBaseTemp(temperature);
     }
 
-    double getTemperature() {
+    public double getTemperature() {
         return temperature;
     }
 }
