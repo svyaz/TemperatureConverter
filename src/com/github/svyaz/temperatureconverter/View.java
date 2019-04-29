@@ -8,7 +8,9 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 
-public class View {
+public class View implements TemperatureView {
+    private TemperatureScale[] scales;
+    private Controller controller;
     private JFrame frame = new JFrame();
     private JLabel enterTempLabel = new JLabel("Enter temperature:");
     private JLabel convertedLabel = new JLabel("Converted:");
@@ -18,7 +20,9 @@ public class View {
     private JButton convertButton = new JButton("Convert");
     private JButton copyButton = new JButton("Copy");
 
-    public View() {
+    public View(Controller controller, TemperatureScale[] scales) {
+        this.scales = scales;
+        this.controller = controller;
         SwingUtilities.invokeLater(() -> {
             // Set system look and feel
             try {
@@ -40,6 +44,9 @@ public class View {
 
             // Set elements
             resultTextArea.setEditable(false);
+            for (TemperatureScale scale : scales) {
+                scaleComboBox.addItem(scale);
+            }
 
             // Set layout and add elements to it
             GroupLayout layout = new GroupLayout(frame.getContentPane());
@@ -75,6 +82,7 @@ public class View {
                             .addComponent(copyButton)
             );
         });
+        registerConvertButtonObserver();
         registerCopyButtonObserver();
     }
 
@@ -87,13 +95,21 @@ public class View {
         });
     }
 
-    void setScales(TemperatureScale[] scales) {
-        for (TemperatureScale scale : scales) {
-            scaleComboBox.addItem(scale);
-        }
+    private void registerConvertButtonObserver() {
+        convertButton.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateView();
+            }
+        });
     }
 
-    void setResult(double temperature, TemperatureScale scale, TemperatureScale[] scales) {
+    private void updateView() {
+        controller.updateView(this);
+    }
+
+    @Override
+    public void setResult(double temperature, TemperatureScale scale) {
         StringBuilder outText = new StringBuilder();
         for (TemperatureScale tempScale : scales) {
             if (scale == tempScale) {
@@ -106,25 +122,24 @@ public class View {
         resultTextArea.setText(outText.toString());
     }
 
-    TemperatureScale getSelectedTempScale() {
+    @Override
+    public TemperatureScale getTempScale() {
         return (TemperatureScale) scaleComboBox.getSelectedItem();
+    }
+
+    @Override
+    public double getTempValue() {
+        return Double.parseDouble(tempField.getText());
+    }
+
+    @Override
+    public void showErrorMessage(String text) {
+        JOptionPane.showMessageDialog(frame, text, "Warning", JOptionPane.WARNING_MESSAGE);
     }
 
     private void copyToClipboard() {
         StringSelection stringSelection = new StringSelection(resultTextArea.getText());
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         clipboard.setContents(stringSelection, null);
-    }
-
-    double getTempValue() {
-        return Double.parseDouble(tempField.getText());
-    }
-
-    JButton getConvertButton() {
-        return convertButton;
-    }
-
-    void showErrorMessage(String text) {
-        JOptionPane.showMessageDialog(frame, text, "Warning", JOptionPane.WARNING_MESSAGE);
     }
 }
